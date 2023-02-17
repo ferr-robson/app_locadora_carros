@@ -1,0 +1,27 @@
+Uma API eh uma forma de conectar duas partes, sem a necessidade delas se conhecerem
+	=> A exemplo, temos os SOs e as aplicacoes
+		-> A aplicacao eh um conjunto entradas e saidas que se relacionam com o usuario
+		-> Essa aplicacao precisa interagir com o Hardware do sistema (CPU, GPU, memoria, etc.)
+		-> Para que as aplicacoes nao tenham que, necessariamente, fazer a conexao entre Hardware e aplicacao - o que iria gerar muito trabalho, uma vez que seria necessario grande conhecimento para desenvolver uma aplicacao simples (sem contar com as diferentes formas como o hardware pode se comportar) - o Kernel do Sistema Operacional faz uma ponte entre os dois. Facilitando a desenvolvimento de aplicacoes devido a padronizacao
+	=> Outro exemplo mais abstrato eh o de um carro
+		-> O carro possui uma serie de implementacao de dificil acesso ao motorista. Eh muito dificil para que o motorita saiba como acinar os freios, utilizar a parte eletrica e o motor, manualmente.
+		-> Para fazer o intermedio entre a Implementcao e o motorista usa-se uma "API"
+			> Nesse caso, a API seria o cambio, pedal, painel, etc. Esses itens fazem a conexao com a Implementacao sem que o motorista precise saber como eles funcionam
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Postman
+	=> Baixando
+		-> Link: <postman.com/downloads>
+		-> Basta abrir o instalador. O programa faz a instalcao sozinho
+	=> Ajuda no desenvolvimento de APIs webservices REST
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Nota:
+	=> php artisan make:model --migration --controller --resource Modelo
+	 	-> php artisan make:model -mcr Modelo
+	=> php artisan make:model --all Modelo
+		-> php artisan make:model -a Modelo
+	=> Os comandos acima sao iguais
+		-> O que mais difere é o --all que cria uma factory e um seeder
