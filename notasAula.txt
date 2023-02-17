@@ -8,7 +8,7 @@ Uma API eh uma forma de conectar duas partes, sem a necessidade delas se conhece
 		-> Para fazer o intermedio entre a Implementcao e o motorista usa-se uma "API"
 			> Nesse caso, a API seria o cambio, pedal, painel, etc. Esses itens fazem a conexao com a Implementacao sem que o motorista precise saber como eles funcionam
 
-------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 
 Postman
 	=> Baixando
@@ -16,7 +16,7 @@ Postman
 		-> Basta abrir o instalador. O programa faz a instalcao sozinho
 	=> Ajuda no desenvolvimento de APIs webservices REST
 
-------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 
 Nota:
 	=> php artisan make:model --migration --controller --resource Modelo
@@ -25,3 +25,10 @@ Nota:
 		-> php artisan make:model -a Modelo
 	=> Os comandos acima sao iguais
 		-> O que mais difere é o --all que cria uma factory e um seeder
+
+----------------------------------------------------------------------------------------------------
+
+Criacao do banco
+	=> create database lc;
+
+----------------------------------------------------------------------------------------------------
