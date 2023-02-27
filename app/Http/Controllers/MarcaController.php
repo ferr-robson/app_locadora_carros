@@ -80,7 +80,29 @@ class MarcaController extends Controller
             return response()->json(['erro' => 'O recurso pesquisado nao existe. Impossivel atualizar.'], 404);
         }
 
-        $request->validate($marca->rules(), $marca->feedback());
+        if($request->method() === 'PATCH'){
+            $regrasDinamicas = array();
+
+            // Percorre o array associativo de regras, pegando o campo ($input) e a regra dele ($regra)
+            // $imput => $regra
+            // 'nome' => 'required|unique:marcas,nome,'. $this->id .'|min:3',
+            // 'imagem' => 'required',
+            foreach($marca->rules() as $input => $regra){
+
+                // Verifica se o campo aparece no $request
+                if(array_key_exists($input, $request->all())){
+                    // Se aparece no $request, cria uma posicao no array com aquele nome ($imput) e atribui a regra ao campo
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+
+            // Usa a regra dinamica para o validate
+            // O feedback pode permanecer o mesmo
+            $request->validate($regrasDinamicas, $marca->feedback());
+        } else {
+            $request->validate($marca->rules(), $marca->feedback());
+        }
+
         $marca->update($request->all());
         return $marca;
     }
