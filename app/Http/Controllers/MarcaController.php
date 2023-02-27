@@ -18,19 +18,9 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $regras = [
-            'nome' => 'required|unique',
-            'imagem' => 'required',
-        ];
-
-        $feedback = [
-            'required' => 'O campo :attribute é obrigatório',
-            'nome.unique' => 'O nome da marca já existe no banco'
-        ];
-
         // O validate() retorna os dados para a rota imediatamente anterior ao controlador
         // Como a api nao armazena qual eh a rota, o retorno eh feito para a rota raiz do progama
-        $request->validate($regras, $feedback);
+        $request->validate($this->marca->rules(), $this->marca->feedback());
         // Para que isso nao gere um erro, o cliente deve informar, no cabecalho da requisicao, que ele sabe lidar com json
         // No PostMan, basta colocar no header a key Accept e o value application/json
 
@@ -51,7 +41,8 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //$marca = Marca::create($request->all());
+        $request->validate($this->marca->rules(), $this->marca->feedback());
+
         $marca = $this->marca->create($request->all());
         return response()->json($marca, 201);
     }
