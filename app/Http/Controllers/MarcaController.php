@@ -14,7 +14,8 @@ class MarcaController extends Controller
      */
     public function index()//: Response
     {
-        return view('welcome');
+        $marcas = Marca::all();
+        return $marcas;
     }
 
     /**
@@ -37,15 +38,9 @@ class MarcaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Marca $marca): Response
+    public function show(Marca $marca)//: Response
     {
-        $exemplo = Exemplo::findOrFail($id);
-
-        $response = new Response(view('exemplo.show', compact('exemplo')));
-
-        $response->header('Content-Type', 'text/xml');
-
-        return $response;
+        return $marca;
     }
 
     /**

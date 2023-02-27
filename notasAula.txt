@@ -42,3 +42,10 @@ Para enviar dados, usando o request, pode-se usar o body do request
 
 A aplicacao, atualmente, funciona da seguinte forma:
 	=> Cliente > Request (com o body codificado pelo x-www-form-urlencoded) usando o verbo HTTP Post > aplicacao (processa o request e retorna uma resposta) > Response (header) (resposta do request, do tipo 'application/json')
+
+----------------------------------------------------------------------------------------------------
+
+Rota index e rota show
+	=> Ambas retornam registros do banco
+	=> index retorna todos os registros de determinado tipo
+	=> show retorna um registro especifico daquele tipo
