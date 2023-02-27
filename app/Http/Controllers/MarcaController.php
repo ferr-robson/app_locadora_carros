@@ -48,7 +48,18 @@ class MarcaController extends Controller
         //dd($request->nome);
         //dd($request->get('nome'));
         //dd($request->imagem);
-        dd($request->file('imagem'));
+        //dd($request->file('imagem'));
+
+        $image = $request->file('imagem');
+        
+        // Existem 3 formas de salvar o arquivo: local, public e s3
+        // Essas opcoes podem ser vistas em config/filesystem.php
+        // Ao usar a funcao store, a imagem eh armazenada em um desses lugares
+        // storage/app/<imagens>/<arquivo>
+        // storage/app/<imagens>/public/<arquivo>
+        $image->store('imagens', 'public');
+
+        dd('Upload de arquivos');
 
         //$marca = $this->marca->create($request->all());
         return response()->json($marca, 201);
