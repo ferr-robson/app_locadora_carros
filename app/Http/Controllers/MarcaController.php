@@ -63,8 +63,9 @@ class MarcaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Marca $marca): RedirectResponse
+    public function destroy(Marca $marca)//: RedirectResponse
     {
-        //
+        $marca->delete();
+        return ['msg' => 'A marca foi removida com sucesso!'];
     }
 }

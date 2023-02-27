@@ -49,3 +49,11 @@ Rota index e rota show
 	=> Ambas retornam registros do banco
 	=> index retorna todos os registros de determinado tipo
 	=> show retorna um registro especifico daquele tipo
+
+----------------------------------------------------------------------------------------------------
+
+URI = protocolo/URL/URN
+URI = https://bootstrap.build/themes
+	=> protocolo: https://
+	=> URL: bootstrap.build
+	=> URN: themes
