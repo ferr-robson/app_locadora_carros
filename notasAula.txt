@@ -62,3 +62,9 @@ URI = https://bootstrap.build/themes
 
 No PostMan, para poder fazer o envio de arquivos, devo selecionar a opcao 'form-data', nao 'x-www-form-urlencoded'
 	=> Essa opção permite selecionar um arquivo para fazer o upload
+
+----------------------------------------------------------------------------------------------------
+
+Criando um link entre o storage e a pasta publica da aplicacao
+	=> php artisan storage:link
+	=> Isso possibilita acessar as imagens e outros arquivos que foram salvos

@@ -15,7 +15,7 @@ class Marca extends Model
         return [
             // Estou desconsiderando o id da marca atual, pois, no update, o nome pode nao ser alterado e acabar causando erros
             'nome' => 'required|unique:marcas,nome,'. $this->id .'|min:3',
-            'imagem' => 'required',
+            'imagem' => 'required|file|mimes:png',
         ];
     }
     /*
@@ -28,6 +28,7 @@ class Marca extends Model
     public function feedback(){
         return [
             'required' => 'O campo :attribute é obrigatório',
+            'imagem.mimes' => 'O arquivo deve ser uma imagem do tipo PNG',
             'nome.unique' => 'O nome da marca já existe no banco',
             'nome.min' => 'O nome deve ter no mínimo 3 caracteres',
         ];
