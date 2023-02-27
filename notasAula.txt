@@ -57,3 +57,8 @@ URI = https://bootstrap.build/themes
 	=> protocolo: https://
 	=> URL: bootstrap.build
 	=> URN: themes
+
+----------------------------------------------------------------------------------------------------
+
+No PostMan, para poder fazer o envio de arquivos, devo selecionar a opcao 'form-data', nao 'x-www-form-urlencoded'
+	=> Essa opção permite selecionar um arquivo para fazer o upload
