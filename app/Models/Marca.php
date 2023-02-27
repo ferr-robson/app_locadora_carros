@@ -13,10 +13,17 @@ class Marca extends Model
 
     public function rules(){
         return [
-            'nome' => 'required|min:3|unique:marcas',
+            // Estou desconsiderando o id da marca atual, pois, no update, o nome pode nao ser alterado e acabar causando erros
+            'nome' => 'required|unique:marcas,nome,'. $this->id .'|min:3',
             'imagem' => 'required',
         ];
     }
+    /*
+     * Parametros do unique:
+     * 1) tabela
+     * 2) nome da coluna
+     * 3) id do registro que sera desconsiderado na pesquisa
+     */
 
     public function feedback(){
         return [
