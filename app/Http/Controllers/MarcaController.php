@@ -54,9 +54,10 @@ class MarcaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Marca $marca): RedirectResponse
+    public function update(Request $request, Marca $marca)//: RedirectResponse
     {
-        //
+        $marca->update($request->all());
+        return $marca;
     }
 
     /**
