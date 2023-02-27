@@ -9,19 +9,24 @@ use Illuminate\Http\Response;
 
 class MarcaController extends Controller
 {
+    public function __construct(Marca $marca){
+        $this->marca = $marca;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()//: Response
+    public function index()
     {
-        $marcas = Marca::all();
+        //$marcas = Marca::all();
+        $marcas = $this->marca->all();
         return $marcas;
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create()
     {
         //
     }
@@ -31,22 +36,24 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        $marca = Marca::create($request->all());
+        //$marca = Marca::create($request->all());
+        $marca = $this->marca->create($request->all());
         return $marca; // retorna como um application/json
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Marca $marca)//: Response
+    public function show($id)
     {
+        $marca = $this->marca->find($id);
         return $marca;
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Marca $marca): Response
+    public function edit(Marca $marca)
     {
         //
     }
@@ -54,8 +61,9 @@ class MarcaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Marca $marca)//: RedirectResponse
+    public function update(Request $request, $id)
     {
+        $marca = $this->marca->find($id);
         $marca->update($request->all());
         return $marca;
     }
@@ -63,8 +71,9 @@ class MarcaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Marca $marca)//: RedirectResponse
+    public function destroy($id)
     {
+        $marca = $this->marca->find($id);
         $marca->delete();
         return ['msg' => 'A marca foi removida com sucesso!'];
     }
