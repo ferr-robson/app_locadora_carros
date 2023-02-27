@@ -12,9 +12,9 @@ class MarcaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index()//: Response
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -28,9 +28,10 @@ class MarcaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-        //
+        $marca = Marca::create($request->all());
+        return $marca; // retorna como um application/json
     }
 
     /**
@@ -38,7 +39,13 @@ class MarcaController extends Controller
      */
     public function show(Marca $marca): Response
     {
-        //
+        $exemplo = Exemplo::findOrFail($id);
+
+        $response = new Response(view('exemplo.show', compact('exemplo')));
+
+        $response->header('Content-Type', 'text/xml');
+
+        return $response;
     }
 
     /**
