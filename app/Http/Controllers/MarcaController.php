@@ -7,6 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use Illuminate\Support\Facades\Storage;
+
 class MarcaController extends Controller
 {
     public function __construct(Marca $marca){
@@ -105,6 +107,11 @@ class MarcaController extends Controller
             $request->validate($marca->rules(), $marca->feedback());
         }
 
+        // Remove o arquivo antigo se houver um novo
+        if($request->file('imagem')){
+            Storage::disk('public')->delete($marca->imagem);
+        }
+
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens', 'public');
 
@@ -126,6 +133,9 @@ class MarcaController extends Controller
         if($marca === null){
             return response()->json(['erro' => 'O recurso pesquisado nao existe. Impossivel remover.'], 404);
         }
+
+        // Remove o arquivo antigo
+        Storage::disk('public')->delete($marca->imagem);
 
         $marca->delete();
         return ['msg' => 'A marca foi removida com sucesso!'];
