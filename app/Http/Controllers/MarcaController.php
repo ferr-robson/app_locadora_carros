@@ -52,6 +52,7 @@ class MarcaController extends Controller
         ]);
         
         return response()->json($marca, 201);
+        dd($request->all());
     }
 
     /**
@@ -90,10 +91,6 @@ class MarcaController extends Controller
         if($request->method() === 'PATCH'){
             $regrasDinamicas = array();
 
-            // Percorre o array associativo de regras, pegando o campo ($input) e a regra dele ($regra)
-            // $imput => $regra
-            // 'nome' => 'required|unique:marcas,nome,'. $this->id .'|min:3',
-            // 'imagem' => 'required',
             foreach($marca->rules() as $input => $regra){
 
                 // Verifica se o campo aparece no $request
@@ -103,15 +100,20 @@ class MarcaController extends Controller
                 }
             }
 
-            // Usa a regra dinamica para o validate
-            // O feedback pode permanecer o mesmo
             $request->validate($regrasDinamicas, $marca->feedback());
         } else {
             $request->validate($marca->rules(), $marca->feedback());
         }
 
-        $marca->update($request->all());
-        return $marca;
+        $imagem = $request->file('imagem');
+        $imagem_urn = $imagem->store('imagens', 'public');
+
+        $marca->update([
+            'nome' => $request->nome,
+            'imagem' => $imagem_urn,
+        ]);
+
+        return response()->json($marca, 200);
     }
 
     /**

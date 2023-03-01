@@ -15,7 +15,7 @@ class Marca extends Model
         return [
             // Estou desconsiderando o id da marca atual, pois, no update, o nome pode nao ser alterado e acabar causando erros
             'nome' => 'required|unique:marcas,nome,'. $this->id .'|min:3',
-            'imagem' => 'required|file|mimes:png',
+            'imagem' => 'required|file',
         ];
     }
     /*
