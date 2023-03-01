@@ -22,14 +22,19 @@ class ModeloController extends Controller
     {
         $modelos = array();
 
-        if($request->has('atributos')){
-            //localhost:8000/api/modelo/?atributos=id,nome,imagem,marca_id
-
-            $atributos = $request->atributos;
-
-            $modelos = $this->modelo->selectRaw($atributos)->with('marca')->get();
+        if($request->has('atributos_marca')){
+            $atributos_marca = $request->atributos_marca; 
+            $modelos = $this->modelo->with('marca:id,'.$atributos_marca);
         } else {
-            $modelos = $this->modelo->with('marca')->get();
+            $modelos = $this->modelo->with('marca');
+        }
+
+        if($request->has('atributos')){
+            //localhost:8000/api/modelo/?=id,nome,imagem,marca_id
+            $atributos = $request->atributos;
+            $modelos = $modelos->selectRaw($atributos)->get();
+        } else {
+            $modelos = $modelos->get();
         }
 
         return response()->json($modelos, 200);
