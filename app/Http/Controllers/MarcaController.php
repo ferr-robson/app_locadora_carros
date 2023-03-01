@@ -20,13 +20,8 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        // O validate() retorna os dados para a rota imediatamente anterior ao controlador
-        // Como a api nao armazena qual eh a rota, o retorno eh feito para a rota raiz do progama
-        //$request->validate($this->marca->rules(), $this->marca->feedback());
-        // Para que isso nao gere um erro, o cliente deve informar, no cabecalho da requisicao, que ele sabe lidar com json
-        // No PostMan, basta colocar no header a key Accept e o value application/json
-
-        $marcas = $this->marca->all();
+        // Uso o get(), pois o all() nao aceita modificacoes na query
+        $marcas = $this->marca->with('modelos')->get();
         return $marcas;
     }
 
@@ -62,7 +57,7 @@ class MarcaController extends Controller
      */
     public function show($id)
     {
-        $marca = $this->marca->find($id);
+        $marca = $this->marca->with('modelos')->find($id);
 
         if($marca === null){
             return response()->json(['erro' => 'O recurso pesquisado nao existe.'], 404);
