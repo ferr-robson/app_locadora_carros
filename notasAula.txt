@@ -108,3 +108,5 @@ Configurando o JWT
 		-> console: php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
 	=> Gerar a secret key no .env
 		-> console: php artisan jwt:secret
+
+----------------------------------------------------------------------------------------------------
