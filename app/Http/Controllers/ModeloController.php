@@ -29,6 +29,11 @@ class ModeloController extends Controller
             $modelos = $this->modelo->with('marca');
         }
 
+        if($request->has('filtro')){
+            $condicoes = explode(':', $request->filtro);
+            $modelos = $modelos->where($condicoes[0], $condicoes[1], $condicoes[2]);
+        }
+
         if($request->has('atributos')){
             //localhost:8000/api/modelo/?=id,nome,imagem,marca_id
             $atributos = $request->atributos;

@@ -68,3 +68,9 @@ No PostMan, para poder fazer o envio de arquivos, devo selecionar a opcao 'form-
 Criando um link entre o storage e a pasta publica da aplicacao
 	=> php artisan storage:link
 	=> Isso possibilita acessar as imagens e outros arquivos que foram salvos
+
+----------------------------------------------------------------------------------------------------
+
+Passando ':' no link para que se possa fazer um explode do link recebido no backend
+	=> localhost:8000/api/modelo?filtro=nome:=:Ford Ka 1.0
+		-> Resultado: nome = Ford Ka 1.0
