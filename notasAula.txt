@@ -92,3 +92,8 @@ Token de autorizacao
 		-> Header
 		-> Payload
 		-> Signature
+
+----------------------------------------------------------------------------------------------------
+
+Instalacao do JWT Auth, usando o Composer
+	=> composer require tymon/jwt-auth
