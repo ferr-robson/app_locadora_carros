@@ -81,3 +81,14 @@ Design Pattern Repository
 	=> Eh um padrao de projeto
 	=> Faz a tratativa dos filtros passados da view para o backend
 	=> Possibilita a nao replicacao de codigo (como a que ocorre em MarcaController.index() e ModeloController.index())
+
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+
+Token de autorizacao
+	=> Como as APIs que estamos usando fazem requisicoes unicas, nao eh possivel salvar a $_SESSION para conter os dados do usuario logado
+	=> Para fazer o trabalho da $_SESSION, usa-se os tokens JWT, que concede autorizacao as partes do site
+	=> O Token JWT eh composto por:
+		-> Header
+		-> Payload
+		-> Signature
