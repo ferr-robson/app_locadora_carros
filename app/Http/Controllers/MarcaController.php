@@ -9,6 +9,8 @@ use Illuminate\Http\Response;
 
 use Illuminate\Support\Facades\Storage;
 
+use App\Repositories\MarcaRepository;
+
 class MarcaController extends Controller
 {
     public function __construct(Marca $marca){
@@ -20,36 +22,25 @@ class MarcaController extends Controller
      */
     public function index(Request $request)
     {
-        //localhost:8000/api/marca/?atributos=id,nome,imagem&atributos_modelos=id,marca_id,nome,imagem&filtro=nome:like:H%
-        $marcas = array();
+        $marcaRepository = new MarcaRepository($this->marca);
 
         if($request->has('atributos_modelos')){
-            $atributos_modelos = $request->atributos_modelos;
-            $marcas = $this->marca->with('modelos:id,'.$atributos_modelos);
+            $atributos_modelos = 'modelos:id,'.$request->atributos_modelos;
+            $marcaRepository->selectAtributosRegistrosRelacionados($atributos_modelos);
         } else {
-            $marcas = $this->marca->with('modelos');
+            $marcaRepository->selectAtributosRegistrosRelacionados('modelos');
         }
 
         if($request->has('filtro')){
-            //&filtro=nome:=:Ford Ka 1.0;abs:=:1
-            
-            $filtros = explode(';', $request->filtro);
-
-            foreach ($filtros as $key => $condicao) {
-                $c = explode(':', $condicao);
-                $marcas = $marcas->where($c[0], $c[1], $c[2]);
-            }
+            $marcaRepository->filtro($request->filtro);
         }
 
         if($request->has('atributos')){
-            //localhost:8000/api/modelo/?=id,nome,imagem,marca_id
             $atributos = $request->atributos;
-            $marcas = $marcas->selectRaw($atributos)->get();
-        } else {
-            $marcas = $marcas->get();
+            $marcaRepository->selectAtributos($request->atributos);
         }
 
-        return response()->json($marcas, 200);
+        return response()->json($marcaRepository->getResultado(), 200);
     }
 
     /**
