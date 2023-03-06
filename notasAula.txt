@@ -86,6 +86,7 @@ Design Pattern Repository
 ----------------------------------------------------------------------------------------------------
 
 Token de autorizacao
+	=> Link do projeto e documentacao: <https://github.com/tymondesigns/jwt-auth>
 	=> Como as APIs que estamos usando fazem requisicoes unicas, nao eh possivel salvar a $_SESSION para conter os dados do usuario logado
 	=> Para fazer o trabalho da $_SESSION, usa-se os tokens JWT, que concede autorizacao as partes do site
 	=> O Token JWT eh composto por:
@@ -97,3 +98,13 @@ Token de autorizacao
 
 Instalacao do JWT Auth, usando o Composer
 	=> composer require tymon/jwt-auth
+
+----------------------------------------------------------------------------------------------------
+
+Configurando o JWT
+	=> Criar a referencia em config\app.php, em providers
+		-> Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+	=> Publicar
+		-> console: php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+	=> Gerar a secret key no .env
+		-> console: php artisan jwt:secret
