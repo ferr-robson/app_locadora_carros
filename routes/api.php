@@ -28,3 +28,9 @@ Route::apiResource('carro', 'App\Http\Controllers\CarroController');
 Route::apiResource('locacao', 'App\Http\Controllers\LocacaoController');
 Route::apiResource('marca', 'App\Http\Controllers\MarcaController');
 Route::apiResource('modelo', 'App\Http\Controllers\ModeloController');
+
+//Route::post('login', 'App\Http\Controllers\AuthController@login');
+Route::post('login', [\App\Http\Controllers\AuthController::class,'login']);
+Route::post('logout', [\App\Http\Controllers\AuthController::class,'logout']);
+Route::post('refresh', [\App\Http\Controllers\AuthController::class,'refresh']);
+Route::post('me', [\App\Http\Controllers\AuthController::class,'me']);
