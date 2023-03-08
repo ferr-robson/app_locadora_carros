@@ -29,8 +29,8 @@ class AuthController extends Controller
     }
 
     public function me() {
-        return 'me';
+        // Retorna os dados do usuario autenticado, de acordo com os dados do token
+        return response()->json(auth()->user());
     }
-
 }
 ?>
