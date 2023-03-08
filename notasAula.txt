@@ -122,3 +122,9 @@ Passar o token para a rota, usando o Postman
 
 Altereando o tempo para que o token expire
 	=> Posso alterar o JWT_TTL no .env ou o ttl em config\jwt
+
+----------------------------------------------------------------------------------------------------
+
+Lembrando que se ao tentar fazer instalacao do Vue.JS e do UI, encontrar um erro, buscar a resposta no projeto anterior, onde ja tive o mesmo problema
+
+----------------------------------------------------------------------------------------------------
