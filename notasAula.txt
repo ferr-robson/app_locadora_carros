@@ -92,7 +92,10 @@ Token de autorizacao
 	=> O Token JWT eh composto por:
 		-> Header
 		-> Payload
+			> Nao colocar info sensiveis aqui pq essa parte eh facilmente descriptografavel
 		-> Signature
+		-> Posso visualizar essas tres partes do meu token no site <jwt.io>
+			> Tenho que colocar o meu JWT_SECRET (encontro ele no .env) no signature
 
 ----------------------------------------------------------------------------------------------------
 
