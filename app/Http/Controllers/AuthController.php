@@ -13,7 +13,7 @@ class AuthController extends Controller
         // auth(<config\auth.php valor do vetor guards>)
         $token = auth('api')->attempt($credenciais);
         if($token){
-            // retornar o token
+            // retornar o token de autorisacao
             return response()->json(['token' => $token], 200);
         } else {
             return response()->json(['erro' => 'Usuário ou senha inválido!'], 403);
