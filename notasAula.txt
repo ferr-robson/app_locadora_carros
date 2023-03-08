@@ -117,3 +117,8 @@ Configurando o JWT
 Passar o token para a rota, usando o Postman
 	=> No header da rota, passar o key Authorization, com o value Bearer <token>
 		-> ex. Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjc4MjkzNTYyLCJleHAiOjE2NzgyOTcxNjIsIm5iZiI6MTY3ODI5MzU2MiwianRpIjoieVJCSGl6TVdCS2dFY2NJeiIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.7VKNc30hGq6FI8M10l8yPGwJPOucjEkwmMKOWmyGXYc
+
+----------------------------------------------------------------------------------------------------
+
+Altereando o tempo para que o token expire
+	=> Posso alterar o JWT_TTL no .env ou o ttl em config\jwt
