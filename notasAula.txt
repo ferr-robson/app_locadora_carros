@@ -128,3 +128,11 @@ Altereando o tempo para que o token expire
 Lembrando que se ao tentar fazer instalacao do Vue.JS e do UI, encontrar um erro, buscar a resposta no projeto anterior, onde ja tive o mesmo problema
 
 ----------------------------------------------------------------------------------------------------
+
+Criacao de views do Vue.JS
+	=> A criacao de views com o Vue.js ficam em resources/js/components
+		-> Todas essas view tem a extensao .vue
+	=> Ao criar uma nova view Vue.js, devo inserir ela em resources/js/app.js
+	=> Para chamar a view Vue.JS de por uma view blade, crio uma tag com o apelido da view Vue (o apelido criado em resources/js/app.js), no blade
+		-> Ex. em login.blade.php, substituo todo o conteudo por <login-component></login-component>
+	=> Sempre que atualizo o cod do Vue.js, tenho que, antes de atualiza a pagina do navegador, executar o comando `npm run build`, no teminal
