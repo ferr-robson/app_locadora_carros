@@ -26,10 +26,15 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::apiResource('marca', 'App\Http\Controllers\MarcaController');
     Route::apiResource('modelo', 'App\Http\Controllers\ModeloController');
 
+    // Mostra dados contidos no JWT
     Route::post('me', [\App\Http\Controllers\AuthController::class,'me']);
+
+    // Atualiza o JWT (invalida o antigo e retorna um novo)
     Route::post('refresh', [\App\Http\Controllers\AuthController::class,'refresh']);
+    
+    // Invalida o JWT
+    Route::post('logout', [\App\Http\Controllers\AuthController::class,'logout']);
 });
 
 //Route::post('login', 'App\Http\Controllers\AuthController@login');
 Route::post('login', [\App\Http\Controllers\AuthController::class,'login']);
-Route::post('logout', [\App\Http\Controllers\AuthController::class,'logout']);
