@@ -6,7 +6,8 @@
 
                 <div class="card-body">
                     <form method="POST" action="">
-
+                        <input type="hidden" name="_token" :value="csrf_token">
+                        
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">E-mail</label>
 
@@ -54,5 +55,9 @@
 </template>
 
 <script>
-    
+    export default {
+        // Aqui recebo as propriedades passadas do blade para o vue
+        //<login-component xyz="Valor1" abc="Valor2"></login-component>
+        props: ['csrf_token'] // funcionamento semelhante ao data{} que usamos no vue.js
+    }    
 </script>
