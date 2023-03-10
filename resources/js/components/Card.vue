@@ -1,7 +1,7 @@
 <template>
     <div class="card mb-3">
         <!-- Card header -->
-        <div class="card-header">{{titulo}}</div><!-- /Card header -->
+        <div class="card-header">.: {{titulo}}</div><!-- /Card header -->
         
         <!-- Card body -->
         <div class="card-body">
