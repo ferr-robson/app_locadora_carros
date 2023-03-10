@@ -1,14 +1,11 @@
 <template>
-    <div class="container">
+    
+  <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <!-- Card de busca -->
-                <div class="card mb-3">
-                    <!-- Card header -->
-                    <div class="card-header">Busca de marcas</div><!-- /Card header -->
-                    
-                    <!-- Card body -->
-                    <div class="card-body">
+
+                <card-component titulo="Busca de marcas">
+                    <template v-slot:conteudo>
                         <!-- .row -->
                         <div class="row">
                             <!-- .col -->
@@ -27,34 +24,26 @@
                                 </input-container-component><!-- /input-container-component -->
                             </div><!-- /.col -->
                         </div> <!-- /.row -->
-                    </div><!-- /Card body -->
-
-                    <!-- Card footer -->
-                    <div class="card-footer">
+                    </template>
+                    <template v-slot:rodape>
                         <button type="submit" class="btn btn-primary btn-sm float-end">Pesquisar</button>
-                    </div><!-- /Card footer -->
-                </div><!-- /Card de busca -->
+                    </template>
+                </card-component>
 
-                <!-- Card listagem de marcas -->
-                <div class="card">
-                    <!-- Card header -->
-                    <div class="card-header">Relação de marcas</div><!-- /Card header -->
-                    
-                    <!-- Card body -->
-                    <div class="card-body">
-                        
-                    </div><!-- /Card body -->
+                <card-component titulo="Relação de marcas">
+                    <template v-slot:conteudo>
                         <table-component></table-component>
-                    <!-- Card footer -->
-                    <div class="card-footer">
+                    </template>
+                    <template v-slot:rodape>
                         <button type="button" class="btn btn-primary btn-sm float-end">Adicionar</button>
-                    </div><!-- /Card footer -->
-                </div><!-- /Card de listagem de marcas -->
+                    </template>
+                </card-component>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Card from './Card.vue';
     
 </script>
