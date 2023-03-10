@@ -1,6 +1,6 @@
 <template>
     
-  <div class="container">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
 
@@ -35,15 +35,19 @@
                         <table-component></table-component>
                     </template>
                     <template v-slot:rodape>
-                        <button type="button" class="btn btn-primary btn-sm float-end">Adicionar</button>
+                        <button type="button" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#modalMarca">Adicionar</button>
                     </template>
                 </card-component>
             </div>
         </div>
+        <modal-component id="modalMarca" titulo="Adicionar marca">
+            <template v-slot:conteudo>
+                <p>coonteudo</p>
+            </template>
+        </modal-component>
     </div>
 </template>
 
 <script>
-import Card from './Card.vue';
-    
+    export default {}    
 </script>
