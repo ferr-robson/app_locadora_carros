@@ -34,7 +34,7 @@
                     <template v-slot:conteudo>
                         <!--<table-component :dados="marcas" :titulos="['id', 'nome', 'imagem']"></table-component>-->
                         <table-component 
-                            :dados="marcas"
+                            :dados="marcas.data"
                             :titulos="{
                                 id: {titulo: 'ID', tipo: 'texto'},
                                 nome: {titulo: 'Nome', tipo: 'texto'},
@@ -95,7 +95,7 @@
                 arquivoImagem: [],
                 transacaoStatus: '',
                 transacaoDetalhes: {},
-                marcas: []
+                marcas: { data: [] } // crio um objeto com o atributo data como sendo um array vazio. Dessa forma, nao tenho mais problemas com a funcao map em Table.vue apontando para undefined
             }
         },
         methods: {
@@ -108,7 +108,7 @@
                 }
                 axios.get(this.urlBase, config)
                     .then(response => {
-                        this.marcas = response.data.data;
+                        this.marcas = response.data;
                     })
                     .catch(errors => {
                         console.log(errors);
