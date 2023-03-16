@@ -85,10 +85,27 @@
                 nomeMarca: '',
                 arquivoImagem: [],
                 transacaoStatus: '',
-                transacaoDetalhes: {}
+                transacaoDetalhes: {},
+                marcas: []
             }
         },
         methods: {
+            carregarLista() {
+                let config = {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': this.token
+                    }
+                }
+                axios.get(this.urlBase, config)
+                    .then(response => {
+                        this.marcas = response.data;
+                        console.log(this.marcas)
+                    })
+                    .catch(errors => {
+                        console.log(errors);
+                    });
+            },
             carregarImagem(e) {
                 this.arquivoImagem = e.target.files
             },
@@ -120,6 +137,9 @@
                         }
                     })
             }
+        },
+        mounted() { // Eh chamado quando a pagina eh `montada`
+            this.carregarLista();
         }
     }
 </script>
