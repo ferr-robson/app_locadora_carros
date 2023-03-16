@@ -47,8 +47,11 @@
                         <div class="row">
                             <div class="col-10">
                                 <paginate-component>
-                                    <li v-for="l, key in marcas.links" :key="key" class="page-item">
-                                        <a class="page-link" href="#" v-html="l.label"></a>
+                                    <li v-for="l, key in marcas.links" :key="key" 
+                                        :class="l.active ? 'page-item active' : 'page-item'" 
+                                        @click="paginacao(l)"
+                                    >
+                                        <a class="page-link" v-html="l.label"></a>
                                     </li>
                                 </paginate-component>
                             </div>
@@ -110,6 +113,13 @@
             }
         },
         methods: {
+            paginacao(l){
+                // Soh passa para a paginacao ao lado, se a URL dela for valida (l.url != null)
+                if(l.url) {
+                    this.urlBase = l.url; // Ajustando a URL
+                    this.carregarLista(); // Recarregando a lista com base na nova URL
+                }
+            },
             carregarLista() {
                 let config = {
                     headers: {
