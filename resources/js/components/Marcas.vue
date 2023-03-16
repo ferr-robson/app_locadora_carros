@@ -42,9 +42,9 @@
         </div>
         <modal-component id="modalMarca" titulo="Adicionar marca">
             <template v-slot:alertas>
-                <alert-component tipo="success"></alert-component>
-                <alert-component tipo="danger"></alert-component>
-            </template>
+                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso" v-if="transacaoStatus == 'adicionado'"></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar cadastrar a marca" v-if="transacaoStatus == 'erro'"></alert-component>
+            </template> 
 
             <template v-slot:conteudo>
                 <div class="form-group">
@@ -75,9 +75,7 @@
                 let token = document.cookie.split(';').find(indice => {
                     return indice.includes('token=');
                 });
-
                 token = 'Bearer ' + token.split('=')[1];
-
                 return token;
             }
         },
@@ -85,23 +83,20 @@
             return {
                 urlBase: 'http://localhost:8000/api/v1/marca',
                 nomeMarca: '',
-                arquivoImagem: []
+                arquivoImagem: [],
+                transacaoStatus: '',
+                transacaoDetalhes: {}
             }
-        }, 
+        },
         methods: {
             carregarImagem(e) {
-                this.arquivoImagem = e.target.files;
+                this.arquivoImagem = e.target.files
             },
-            salvar(){
-                //console.log(this.nomeMarca, this.arquivoImagem[0]);
-                
-                // Criando algo similar ao form-data do PostMan, com um objeto de FormData
-                // Inserindo o nome da marca e a imagem ao form-data
+            salvar() {
                 let formData = new FormData();
-                formData.append('nome', this.nomeMarca);
-                formData.append('imagem', this.arquivoImagem[0]);
+                formData.append('nome', this.nomeMarca)
+                formData.append('imagem', this.arquivoImagem[0])
 
-                // Configuracao da requisicao
                 let config = {
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -110,16 +105,21 @@
                     }
                 }
 
-                // Usando a biblioteca axios para fazer a requisicao http para o backend
-                // post(<caminho>,<dados>,<configuracao da requisicao>)
                 axios.post(this.urlBase, formData, config)
                     .then(response => {
-                        console.log(response);
+                        this.transacaoStatus = 'adicionado'
+                        this.transacaoDetalhes = {
+                            mensagem: 'ID do registro: ' + response.data.id
+                        }
                     })
                     .catch(errors => {
-                        console.log(errors);
+                        this.transacaoStatus = 'erro'
+                        this.transacaoDetalhes = {
+                            mensagem: errors.response.data.message,
+                            dados: errors.response.data.errors
+                        }
                     })
             }
         }
-    }    
+    }
 </script>
