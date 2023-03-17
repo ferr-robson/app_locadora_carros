@@ -142,3 +142,16 @@ Criacao de views do Vue.JS
 npm run watch (npm run dev)
 	=> Para nao ter que ficar executando o npm run build toda hora, posso executar o npm run watch, que vai assistir as modificacoes feitas no vue.js e recompilando a aplicacao 
 	=> Nas versoes mais recentes do vue.js, esse comando foi substituido pelo npm run dev
+
+----------------------------------------------------------------------------------------------------
+
+VueX
+	=> É uma forma de se criar atributos globais no Vue
+	=> Instalacao:
+		-> npm install vuex
+	=> Configuracao:
+		-> Depois de instalar, basta configurar o app.js
+	=> Usando:
+		-> Criando a variavel `teste` em store.state
+			> const store = createStore({state: {teste: 'Teste de recuperacao de valor da Store Vuex'}})
+		-> Chamada: $store.state.<nome da variavel em store>

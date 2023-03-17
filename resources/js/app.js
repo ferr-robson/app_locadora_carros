@@ -7,6 +7,16 @@
 import './bootstrap';
 import { createApp } from 'vue';
 
+// Import do Vuex
+import { createStore } from 'vuex'
+
+// Criacao de uma nova store
+const store = createStore({
+    state: {
+        teste: 'Teste de recuperacao de valor da Store Vuex'
+    }
+})
+
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -14,6 +24,8 @@ import { createApp } from 'vue';
  */
 
 const app = createApp({});
+
+app.use(store);
 
 import ExampleComponent from './components/ExampleComponent.vue';
 app.component('example-component', ExampleComponent);
