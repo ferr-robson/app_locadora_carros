@@ -12,7 +12,7 @@
                             <div class="col mb-3">
                                 <!-- input-container-component -->
                                 <input-container-component id="inputId" titulo="ID" texto-ajuda="Opcional. Informe o ID do registro" id-help="idHelp">
-                                    <input type="number" class="form-control" id="inputID" aria-describedby="idHelp" placeholder="ID">
+                                    <input type="number" class="form-control" id="inputID" aria-describedby="idHelp" placeholder="ID" v-model="busca.id">
                                 </input-container-component><!-- /input-container-component -->
                             </div><!-- /.col -->
                             
@@ -20,13 +20,13 @@
                             <div class="col mb-3">
                                 <!-- input-container-component -->
                                 <input-container-component id="inputNome" titulo="Nome" texto-ajuda="Opcional. Informe o Nome da marca" id-help="nomeHelp">
-                                    <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome">
+                                    <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome" v-model="busca.nome">
                                 </input-container-component><!-- /input-container-component -->
                             </div><!-- /.col -->
                         </div> <!-- /.row -->
                     </template>
                     <template v-slot:rodape>
-                        <button type="submit" class="btn btn-primary btn-sm float-end">Pesquisar</button>
+                        <button type="submit" class="btn btn-primary btn-sm float-end" @click="pesquisar()">Pesquisar</button>
                     </template>
                 </card-component>
 
@@ -105,18 +105,43 @@
         data() {
             return {
                 urlBase: 'http://localhost:8000/api/v1/marca',
+                urlPaginacao: '',
+                urlFiltro: '',
                 nomeMarca: '',
                 arquivoImagem: [],
                 transacaoStatus: '',
                 transacaoDetalhes: {},
-                marcas: { data: [] } // crio um objeto com o atributo data como sendo um array vazio. Dessa forma, nao tenho mais problemas com a funcao map em Table.vue apontando para undefined
+                marcas: { data: [] }, // crio um objeto com o atributo data como sendo um array vazio. Dessa forma, nao tenho mais problemas com a funcao map em Table.vue apontando para undefined
+                busca: {id: '', nome: ''}
             }
         },
         methods: {
+            pesquisar() {
+                let filtro = '';
+
+                for(let chave in this.busca) {
+                    if(this.busca[chave]){
+                        if(filtro != ''){
+                            filtro += ';';
+                        }
+                        filtro += chave + ':like:' + this.busca[chave];
+                    }
+                }
+                
+                if(filtro != ''){
+                    this.urlPaginacao = 'page=1'; // Sempre voltar para a pag 1 ao fazer uma busca
+                    this.urlFiltro = '&filtro=' + filtro;
+                } else { // Se nao for passado nenhum filtro, settar this.urlFiltro com vazio e carregar a lista sem parametros de filtro
+                    this.urlFiltro = '';
+                }
+
+                this.carregarLista();
+            },
             paginacao(l){
                 // Soh passa para a paginacao ao lado, se a URL dela for valida (l.url != null)
                 if(l.url) {
-                    this.urlBase = l.url; // Ajustando a URL
+                    // Nao altera mais a this.urlBase, apenas a paginacao
+                    this.urlPaginacao = l.url.split('?')[1];
                     this.carregarLista(); // Recarregando a lista com base na nova URL
                 }
             },
@@ -127,7 +152,10 @@
                         'Authorization': this.token
                     }
                 }
-                axios.get(this.urlBase, config)
+
+                // Nao passar a this.urlBase. Esse valor deve permanecer statico, sempre
+                let url = this.urlBase + '?' + this.urlPaginacao + this.urlFiltro;
+                axios.get(url, config)
                     .then(response => {
                         this.marcas = response.data;
                     })
