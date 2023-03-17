@@ -43,7 +43,7 @@
                         <!--<table-component :dados="marcas" :titulos="['id', 'nome', 'imagem']"></table-component>-->
                         <table-component 
                             :dados="marcas.data"
-                            :visualizar="true"
+                            :visualizar="{ visivel: true, dataBSToggle: 'modal', dataBSTarget: '#modalVisualizar' }"
                             :atualizar="true"
                             :remover="true"
                             :titulos="{
