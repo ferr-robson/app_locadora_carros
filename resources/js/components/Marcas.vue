@@ -4,6 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
+                <!-- Card de filtros de busca -->
                 <card-component titulo="Busca de marcas">
                     <template v-slot:conteudo>
                         <!-- .row -->
@@ -13,23 +14,30 @@
                                 <!-- input-container-component -->
                                 <input-container-component id="inputId" titulo="ID" texto-ajuda="Opcional. Informe o ID do registro" id-help="idHelp">
                                     <input type="number" class="form-control" id="inputID" aria-describedby="idHelp" placeholder="ID" v-model="busca.id">
-                                </input-container-component><!-- /input-container-component -->
-                            </div><!-- /.col -->
+                                </input-container-component>
+                                <!-- /input-container-component -->
+                            </div>
+                            <!-- /.col -->
                             
                             <!-- .col -->
                             <div class="col mb-3">
                                 <!-- input-container-component -->
                                 <input-container-component id="inputNome" titulo="Nome" texto-ajuda="Opcional. Informe o Nome da marca" id-help="nomeHelp">
                                     <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome" v-model="busca.nome">
-                                </input-container-component><!-- /input-container-component -->
-                            </div><!-- /.col -->
-                        </div> <!-- /.row -->
+                                </input-container-component>
+                                <!-- /input-container-component -->
+                            </div>
+                            <!-- /.col -->
+                        </div> 
+                        <!-- /.row -->
                     </template>
                     <template v-slot:rodape>
                         <button type="submit" class="btn btn-primary btn-sm float-end" @click="pesquisar()">Pesquisar</button>
                     </template>
-                </card-component>
+                </card-component> 
+                <!-- / Card de filtro de busca -->
 
+                <!-- Card de listagem de marcas -->
                 <card-component titulo="Relação de marcas">
                     <template v-slot:conteudo>
                         <!--<table-component :dados="marcas" :titulos="['id', 'nome', 'imagem']"></table-component>-->
@@ -63,9 +71,27 @@
                             </div>
                         </div>
                     </template>
-                </card-component>
+                </card-component> 
+                <!-- / Card de listagem de marcas -->
+
             </div>
         </div>
+
+        <!-- Modal de visualizacao de marcas -->
+        <modal-component id="modalVisualizar" titulo="Nome marca">
+            <template v-slot:alertas></template> 
+            <template v-slot:conteudo>
+                <p>Todo o conteudo vem aqui</p>
+            </template>
+
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" @click="salvar()">Salvar edição</button>
+            </template>
+        </modal-component> 
+        <!-- / Modal de visualizacao de marcas -->
+
+        <!-- Modal de adicao de marca -->
         <modal-component id="modalMarca" titulo="Adicionar marca">
             <template v-slot:alertas>
                 <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso" v-if="transacaoStatus == 'adicionado'"></alert-component>
@@ -90,7 +116,8 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
-        </modal-component>
+        </modal-component> 
+        <!-- / Modal de adicao de marcas -->
     </div>
 </template>
 
