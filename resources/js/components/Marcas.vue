@@ -79,7 +79,9 @@
 
         <!-- Modal de remocao de marcas -->
         <modal-component id="modalRemover" :titulo="$store.state.item.nome">
-            <template v-slot:alertas></template> 
+            <template v-slot:alertas>
+                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Marca removida com sucesso!" v-if="transacaoStatus == 'removido'"></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar remover a marca" v-if="transacaoStatus == 'erro remocao'"></alert-component></template> 
             <template v-slot:conteudo>
                 <input-container-component titulo="ID">
                     <input type="text" class="form-control" :value="$store.state.item.id" disabled>
@@ -89,8 +91,8 @@
             </template>
 
             <template v-slot:rodape>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-danger" @click="remover()">Remover</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="limparFeedback()">Fechar</button>
+                <button type="button" class="btn btn-danger" @click="remover()" v-if="transacaoStatus != 'removido'">Remover</button>
             </template>
         </modal-component> 
         <!-- / Modal de remocao de marcas -->
@@ -142,8 +144,8 @@
             </template>
 
             <template v-slot:rodape>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="limparFeedback()">Fechar</button>
+                <button type="button" class="btn btn-primary" @click="salvar()" v-if="transacaoStatus != 'adicionado'">Salvar</button>
             </template>
         </modal-component> 
         <!-- / Modal de adicao de marcas -->
@@ -175,6 +177,10 @@
             }
         },
         methods: {
+            limparFeedback() {
+                this.transacaoStatus = '';
+                this.transacaoDetalhes = {};
+            },
             remover() {
                 let confirmacao = confirm('Tem certeza de que quer remover a marca?');
 
@@ -194,11 +200,21 @@
                 
                 axios.post(url, formData, config)
                     .then(response => {
-                        console.log('Registro removido com sucesso!', response);
+                        //console.log('Registro removido com sucesso!', response);
+                        this.transacaoStatus = 'removido';
+                        this.transacaoDetalhes = {
+                            mensagem: 'Marca foi removida com sucesso!'
+                        }
+                        this.urlPaginacao = 'page=1';
                         this.carregarLista();
                     })
                     .catch(errors => {
-                        console.log('Houve um erro ao remover o registro', errors)
+                        //console.log('Houve um erro ao remover o registro', errors);
+                        this.transacaoStatus = 'erro remocao';
+                        this.transacaoDetalhes = {
+                            mensagem: errors.response.data.message.search("Integrity constraint violation: 1451") > -1 ? 'Remova todos os modelos vinculados a essa marca antes de removê-lo.' : errors.response.data.message,
+                            dados: errors.response.data.errors
+                        }
                     })
             },
             pesquisar() {
@@ -270,6 +286,8 @@
                         this.transacaoDetalhes = {
                             mensagem: 'ID do registro: ' + response.data.id
                         }
+                        this.urlPaginacao = 'page=1';
+                        this.carregarLista();
                     })
                     .catch(errors => {
                         this.transacaoStatus = 'erro'
