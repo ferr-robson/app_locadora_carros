@@ -150,11 +150,15 @@ class MarcaController extends Controller
         if($marca === null){
             return response()->json(['erro' => 'O recurso pesquisado nao existe. Impossivel remover.'], 404);
         }
-
-        // Remove o arquivo antigo
-        Storage::disk('public')->delete($marca->imagem);
-
+        
+        $img = $marca->imagem;
+        
         $marca->delete();
+
+        // Remove o arquivo de logo da imagem
+        // Fazendo dessa forma, depois do delete(), impede o erro de remover uma imagem sem remover o registro
+        // Esse erro, normalmente, ocorre ao tentar remover uma marca que tem FK em algum modelo
+        Storage::disk('public')->delete($img);
         return ['msg' => 'A marca foi removida com sucesso!'];
     }
 }
