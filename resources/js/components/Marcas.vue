@@ -217,13 +217,19 @@
                 let formData = new FormData();
                 formData.append('_method', 'patch');
                 formData.append('nome', this.$store.state.item.nome);
-                formData.append('imagem', this.arquivoImagem[0]);
+
+                // Verificano se a imagem foi informada Caso nao tenha sido, fazer a requisicoa com put
+                if(this.arquivoImagem[0]) {
+                    formData.append('imagem', this.arquivoImagem[0]);
+                }
 
                 let url = this.urlBase + '/' + this.$store.state.item.id;
 
                 axios.post(url, formData, config)
                     .then(response => {
                         console.log('Atualizado', response);
+                        
+                        inputImagemAtt.value = '';
                         this.urlPaginacao = 'page=1';
                         this.carregarLista();
                     })
