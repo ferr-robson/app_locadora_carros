@@ -44,7 +44,7 @@
                         <table-component 
                             :dados="marcas.data"
                             :visualizar="{ visivel: true, dataBSToggle: 'modal', dataBSTarget: '#modalVisualizar' }"
-                            :atualizar="true"
+                            :atualizar="{ visivel: true, dataBSToggle: 'modal', dataBSTarget: '#modalAtualizar' }"
                             :remover="{ visivel: true, dataBSToggle: 'modal', dataBSTarget: '#modalRemover' }"
                             :titulos="{
                                 id: {titulo: 'ID', tipo: 'texto'},
@@ -77,11 +77,38 @@
             </div>
         </div>
 
+        <!-- Modal de atualizacao de marca -->
+        <modal-component id="modalAtualizar" :titulo="'Atualizar ' + $store.state.item.nome">
+            <template v-slot:alertas></template> 
+
+            <template v-slot:conteudo>
+                <div class="form-group">
+                    <input-container-component id="nomeAtt" titulo="Nome" texto-ajuda="Informe o novo nome marca" id-help="nomeAttHelp">
+                        <input type="text" class="form-control" id="nomeAtt" aria-describedby="nomeAttHelp" placeholder="Nome" v-model="nomeMarca">
+                    </input-container-component>
+                </div>
+
+                <div class="form-group">
+                    <input-container-component id="inputImagemAtt" titulo="Imagem" texto-ajuda="Selecione uma nova imagem PNG" id-help="imagemAttHelp">
+                        <input type="file" class="form-control" id="inputImagemAtt" aria-describedby="imagemAttHelp" placeholder="Selecione uma nova imagem" @change="carregarImagem($event)">
+                    </input-container-component>
+                </div>
+            </template>
+
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="limparFeedback()">Fechar</button>
+                <button type="button" class="btn btn-primary" @click="atualizar()" v-if="transacaoStatus != 'atualizado'">Atualizar</button>
+            </template>
+        </modal-component> 
+        <!-- / Modal de atualizacao de marcas -->
+
         <!-- Modal de remocao de marcas -->
         <modal-component id="modalRemover" :titulo="$store.state.item.nome">
             <template v-slot:alertas>
                 <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Marca removida com sucesso!" v-if="transacaoStatus == 'removido'"></alert-component>
-                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar remover a marca" v-if="transacaoStatus == 'erro remocao'"></alert-component></template> 
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar remover a marca" v-if="transacaoStatus == 'erro remocao'"></alert-component>
+            </template> 
+            
             <template v-slot:conteudo>
                 <input-container-component titulo="ID">
                     <input type="text" class="form-control" :value="$store.state.item.id" disabled>
@@ -177,6 +204,9 @@
             }
         },
         methods: {
+            atualizar() {
+                console.log(this.$store.state.item);
+            },
             limparFeedback() {
                 this.transacaoStatus = '';
                 this.transacaoDetalhes = {};
