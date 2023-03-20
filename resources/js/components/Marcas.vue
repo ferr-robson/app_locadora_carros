@@ -45,7 +45,7 @@
                             :dados="marcas.data"
                             :visualizar="{ visivel: true, dataBSToggle: 'modal', dataBSTarget: '#modalVisualizar' }"
                             :atualizar="true"
-                            :remover="true"
+                            :remover="{ visivel: true, dataBSToggle: 'modal', dataBSTarget: '#modalRemover' }"
                             :titulos="{
                                 id: {titulo: 'ID', tipo: 'texto'},
                                 nome: {titulo: 'Nome', tipo: 'texto'},
@@ -77,8 +77,26 @@
             </div>
         </div>
 
+        <!-- Modal de remocao de marcas -->
+        <modal-component id="modalRemover" :titulo="$store.state.item.nome">
+            <template v-slot:alertas></template> 
+            <template v-slot:conteudo>
+                <input-container-component titulo="ID">
+                    <input type="text" class="form-control" :value="$store.state.item.id" disabled>
+                </input-container-component>
+
+                <img :src="'/storage/' + $store.state.item.imagem" v-if="$store.state.item.imagem">
+            </template>
+
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-danger" @click="console.log('remover')">Remover</button>
+            </template>
+        </modal-component> 
+        <!-- / Modal de remocao de marcas -->
+
         <!-- Modal de visualizacao de marcas -->
-        <modal-component id="modalVisualizar" titulo="Nome marca">
+        <modal-component id="modalVisualizar" :titulo="$store.state.item.nome">
             <template v-slot:alertas></template> 
             <template v-slot:conteudo>
                 <input-container-component titulo="ID">
@@ -98,7 +116,6 @@
 
             <template v-slot:rodape>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" @click="salvar()">Salvar edição</button>
             </template>
         </modal-component> 
         <!-- / Modal de visualizacao de marcas -->
