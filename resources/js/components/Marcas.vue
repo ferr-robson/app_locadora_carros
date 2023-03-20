@@ -84,7 +84,7 @@
             <template v-slot:conteudo>
                 <div class="form-group">
                     <input-container-component id="nomeAtt" titulo="Nome" texto-ajuda="Informe o novo nome marca" id-help="nomeAttHelp">
-                        <input type="text" class="form-control" id="nomeAtt" aria-describedby="nomeAttHelp" placeholder="Nome" v-model="nomeMarca">
+                        <input type="text" class="form-control" id="nomeAtt" aria-describedby="nomeAttHelp" placeholder="Nome" v-model="$store.state.item.nome">
                     </input-container-component>
                 </div>
 
@@ -205,7 +205,31 @@
         },
         methods: {
             atualizar() {
-                console.log(this.$store.state.item);
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data', // settado, pois estou enviando uma imagem 
+                        'Accept': 'application/json',
+                        'Authorization': this.token
+                    }
+                }
+
+                let formData = new FormData();
+                formData.append('_method', 'patch');
+                formData.append('nome', this.$store.state.item.nome);
+                formData.append('imagem', this.arquivoImagem[0]);
+
+                let url = this.urlBase + '/' + this.$store.state.item.id;
+
+                axios.post(url, formData, config)
+                    .then(response => {
+                        console.log('Atualizado', response);
+                        this.urlPaginacao = 'page=1';
+                        this.carregarLista();
+                    })
+                    .catch(errors => {
+                        console.log('Erro ao atualizar', errors.response)
+                    });
             },
             limparFeedback() {
                 this.transacaoStatus = '';
