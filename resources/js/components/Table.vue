@@ -41,6 +41,7 @@
         props: ['dados', 'titulos', 'visualizar', 'atualizar', 'remover'],
         methods: {
             setStore(obj) {
+                obj.created_at = this.formataDataTempo(obj.created_at);
                 this.$store.state.item = obj;
             },
             formataDataTempo(valor) {
