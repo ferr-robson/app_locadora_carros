@@ -184,15 +184,6 @@
 
 <script>
     export default {
-        computed: {
-            token() {
-                let token = document.cookie.split(';').find(indice => {
-                    return indice.includes('token=');
-                });
-                token = 'Bearer ' + token.split('=')[1];
-                return token;
-            }
-        },
         data() {
             return {
                 urlBase: 'http://localhost:8000/api/v1/marca',
@@ -212,8 +203,6 @@
                 let config = {
                     headers: {
                         'Content-Type': 'multipart/form-data', // settado, pois estou enviando uma imagem 
-                        'Accept': 'application/json',
-                        'Authorization': this.token
                     }
                 }
 
@@ -255,19 +244,12 @@
 
                 if(!confirmacao) return false;
 
-                let config = {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': this.token
-                    }
-                }
-
                 let formData = new FormData();
                 formData.append('_method', 'delete');
 
                 let url = this.urlBase + '/' + this.$store.state.item.id;
                 
-                axios.post(url, formData, config)
+                axios.post(url, formData)
                     .then(response => {
                         //console.log('Registro removido com sucesso!', response);
                         this.transacaoStatus = 'removido';
@@ -316,16 +298,10 @@
                 }
             },
             carregarLista() {
-                let config = {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': this.token
-                    }
-                }
 
                 // Nao passar a this.urlBase. Esse valor deve permanecer statico, sempre
                 let url = this.urlBase + '?' + this.urlPaginacao + this.urlFiltro;
-                axios.get(url, config)
+                axios.get(url)
                     .then(response => {
                         this.marcas = response.data;
                     })
@@ -344,8 +320,6 @@
                 let config = {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        'Accept': 'application/json',
-                        'Authorization': this.token
                     }
                 }
 
