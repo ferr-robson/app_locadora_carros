@@ -79,7 +79,10 @@
 
         <!-- Modal de atualizacao de marca -->
         <modal-component id="modalAtualizar" :titulo="'Atualizar ' + $store.state.item.nome">
-            <template v-slot:alertas></template> 
+            <template v-slot:alertas>
+                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Registro atualizado com sucesso" v-if="transacaoStatus == 'sucesso'"></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar atualizar a marca" v-if="transacaoStatus == 'erro'"></alert-component>
+            </template> 
 
             <template v-slot:conteudo>
                 <div class="form-group">
@@ -227,14 +230,20 @@
 
                 axios.post(url, formData, config)
                     .then(response => {
-                        console.log('Atualizado', response);
-                        
                         inputImagemAtt.value = '';
+                        this.transacaoStatus = 'sucesso';
+                        this.transacaoDetalhes = {
+                            mensagem: 'O registro foi atualizado com sucesso!'
+                        }
                         this.urlPaginacao = 'page=1';
                         this.carregarLista();
                     })
                     .catch(errors => {
-                        console.log('Erro ao atualizar', errors.response)
+                        this.transacaoDetalhes = {
+                            mensagem: errors.response.data.message,
+                            dados: errors.response.data.errors
+                        }
+                        this.transacaoStatus = 'erro';
                     });
             },
             limparFeedback() {
