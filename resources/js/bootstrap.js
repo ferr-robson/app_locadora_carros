@@ -49,7 +49,7 @@ axios.interceptors.request.use(
         return config;
     },
     error => {
-        console.log('erro na requisicao: ', error);
+        //console.log('erro na requisicao: ', error);
         return Promise.reject(error);
     }
 );
@@ -57,11 +57,26 @@ axios.interceptors.request.use(
 // Interceptando a resposta de uma requisicao axios
 axios.interceptors.response.use(
     config => {
-        console.log('interceptando a resposta antes da aplicacao', config);
+        //console.log('interceptando a resposta antes da aplicacao', config);
         return config;
     },
     error => {
-        console.log('erro na resposta: ', error);
+        if(error.response.status == 401 && error.response.data.message == 'Token has expired') {
+            
+            // Fazendo uma requisicao para a rota refresh
+            axios.post('http://localhost:8000/api/refresh')
+                .then(response => {
+                    // Pegando o novo token e salvando ele nos cookies
+                    document.cookie = 'token=' + response.data.token;
+
+                    // Recarregando a pagina 
+                    window.location.reload();
+                })
+        }
+        /*else if(error.response.status == 500 && error.response.data.message == 'The token has been blacklisted') {
+            console.log('lista negra. Terminar a secao');
+        }*/
+        //console.log('erro na resposta: ', error);
         return Promise.reject(error);
     }
 );
