@@ -16,7 +16,7 @@
                         </span>
 
                         <span v-if="titulos[chaveValor].tipo == 'data'">
-                            {{valor}}
+                            {{ formataDataTempo(valor) }}
                         </span>
 
                         <span v-if="titulos[chaveValor].tipo == 'imagem'">
@@ -40,8 +40,20 @@
     export default {
         props: ['dados', 'titulos', 'visualizar', 'atualizar', 'remover'],
         methods: {
-            setStore(obj){
+            setStore(obj) {
                 this.$store.state.item = obj;
+            },
+            formataDataTempo(valor) {
+                if(!valor) return '';
+            
+                let data = valor.split('T')[0];
+                data = data.split('-');
+                data = data[2] + '/' + data[1] + '/' + data[0];
+            
+                let hora = valor.split('T')[1];
+                hora = hora.split('.')[0];
+            
+                return data + ' - ' + hora;
             }
         },
         computed: {
